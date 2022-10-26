@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { PrismaService } from './services/prisma/prisma.service';
 import { HealthController } from './controllers/health/health.controller';
 import { TerminusModule } from '@nestjs/terminus';
-import { PrismaHealthIndicator } from './indicators/health.indicator';
+import { PrismaHealthIndicator } from './controllers/health/health.indicator';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 

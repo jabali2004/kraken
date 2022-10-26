@@ -1,6 +1,6 @@
 import { TerminusModule } from '@nestjs/terminus';
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaHealthIndicator } from '../../indicators/health.indicator';
+import { PrismaHealthIndicator } from './health.indicator';
 import { PrismaService } from '../../services/prisma/prisma.service';
 import { HealthController } from './health.controller';
 

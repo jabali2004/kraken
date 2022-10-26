@@ -23,7 +23,6 @@ async function bootstrap() {
     .setTitle('Kraken')
     .setDescription('Kraken')
     .setVersion('1.0')
-    .addServer('/api/')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
