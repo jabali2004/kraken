@@ -1,4 +1,7 @@
+import { HealthCheckService, TerminusModule } from '@nestjs/terminus';
 import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaHealthIndicator } from '../../indicators/health.indicator';
+import { PrismaService } from '../../services/prisma/prisma.service';
 import { HealthController } from './health.controller';
 
 describe('HealthController', () => {
@@ -6,6 +9,8 @@ describe('HealthController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [TerminusModule],
+      providers: [PrismaHealthIndicator, PrismaService],
       controllers: [HealthController],
     }).compile();
 

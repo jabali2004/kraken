@@ -7,6 +7,7 @@ import { TerminusModule } from '@nestjs/terminus';
 import { PrismaHealthIndicator } from './indicators/health.indicator';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+
 @Module({
   imports: [
     TerminusModule,

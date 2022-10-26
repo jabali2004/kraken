@@ -5,5 +5,7 @@
       "name": "kraken"
     }
   ],
-  "settings": {}
+  "settings": {
+    "typescript.preferences.importModuleSpecifier": "relative"
+  }
 }
