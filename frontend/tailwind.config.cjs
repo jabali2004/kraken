@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   prefix: '',
-  content: ['./src/**/*.{tsx,ts,js}'],
+  content: ['./src/**/*.{tsx,jsx,ts,js}'],
   theme: {
     extend: {
       gridTemplateRows: {
@@ -16,13 +16,7 @@ module.exports = {
     require('@tailwindcss/aspect-ratio'),
   ],
   daisyui: {
-    styled: true,
-    themes: true,
-    base: true,
-    utils: true,
-    logs: true,
-    rtl: false,
     prefix: '',
-    themes: ['light'],
+    theme: 'dark',
   },
 };

@@ -3,6 +3,9 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Configuration } from './api';
 import { HealthApi } from './api/api/health-api';
 import './App.css';
+import { AppContext } from './contexts/AppContext';
+import Layout from './layout/Layout';
+import Dashboard from './pages/Dashboard';
 
 export default function App() {
   const configuration = new Configuration({
@@ -20,9 +23,11 @@ export default function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={<>Hello World, State: {health}</>} />
-      <Route path="*" element={<Navigate to="/" />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Layout>
   );
 }
