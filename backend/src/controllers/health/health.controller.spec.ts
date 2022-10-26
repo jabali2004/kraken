@@ -1,4 +1,4 @@
-import { HealthCheckService, TerminusModule } from '@nestjs/terminus';
+import { TerminusModule } from '@nestjs/terminus';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaHealthIndicator } from '../../indicators/health.indicator';
 import { PrismaService } from '../../services/prisma/prisma.service';
