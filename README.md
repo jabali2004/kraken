@@ -30,26 +30,51 @@ You can use the framework(s) and language(s) of your choosing.
 [CRUD]: https://en.wikipedia.org/wiki/Create%2C_read%2C_update_and_delete
 
 ## Example data (yaml)
-### Application a
+### Application alpha
 ```yaml
 name: alpha
 version: 1.2.0
 stack: “python-django”
 description: “This application provides alpha services.”
-team: “Unicorn”
+team: “🦄 Unicorn”
 owner: “john.doe@tradebyte.com”
 eks-size: “xl”
 ```
 
-### Application b
+### Application beta
 ```yaml
 name: beta
 version: 1.0.0
 depends-on: alpha
 stack: “java-spring” 
 description: “This application provides beta services on top of alpha.”
-team: “Duck”
+team: “🦆 Duck”
 owner: “max.mustermann@tradebyte.com”
+eks-size: “m”
+```
+
+### Application gamma
+```yaml
+name: gamma
+version: 0.1.0
+depends-on: 
+  - alpha
+  - beta
+stack: “java-spring” 
+description: “This application provides (pre-release) gamma services on top of alpha and beta.”
+team: “🐒 Monkey”
+owner: “rosanna.thompson@tradebyte.com”
+eks-size: “s”
+```
+
+### Application delta
+```yaml
+name: delta
+version: 1.1.0
+stack: “java-spring” 
+description: “This application provides delta services.”
+team: “🐬 Dolphin”
+owner: “madhu.amit@tradebyte.com”
 eks-size: “m”
 ```
 
