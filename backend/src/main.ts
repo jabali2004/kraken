@@ -7,8 +7,9 @@ import { PrismaService } from './services/prisma/prisma.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  const logger = new Logger('Startup');
   const logLevel: LogLevel = process.env.LOGGER as LogLevel;
+
   app.useLogger([logLevel || 'debug']);
 
   app.setGlobalPrefix('api', {
@@ -30,9 +31,16 @@ async function bootstrap() {
 
   app.use(helmet());
 
+  app.enableCors({
+    origin: [process.env.FRONTEND_URL || '', process.env.BACKEND_URL || ''],
+  });
+
+  logger.log(
+    `Enable cors origin for ${process.env.FRONTEND_URL} and ${process.env.BACKEND_URL}`,
+  );
+
   await app.listen(process.env.PORT || 3000);
 
-  const logger = new Logger('Startup');
   logger.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
