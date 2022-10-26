@@ -13,12 +13,25 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
+    services:
+      postgres:
+        image: postgres:14-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2.5.1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Add .env file
+        run: cd backend/ && cp .env.example .env
       - name: Install project dependencies
         run: cd backend/ && npm install
       - name: Run linter
@@ -41,5 +54,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install project dependencies
         run: cd frontend/ && npm install
+      - name: Generate api client
+        run: cd frontend/ && npm run openapi:generate
       - name: Build frontend
         run: cd frontend/ && npm run build
