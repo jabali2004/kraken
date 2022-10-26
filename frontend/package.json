@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "openapi:update": "curl http://localhost:3000/swagger-json -o openapi/backend.json",
+    "openapi:generate": "rm -rf src/api/** && openapi-generator-cli generate -i openapi/backend.json -g typescript-axios -o src/api/ --additional-properties=supportsES6=true,withInterfaces=true,stringEnums=true,withSeparateModelsAndApi=true,modelPackage=models,apiPackage=api",
+    "openapi": "npm run openapi:update && npm run openapi:generate"
   },
   "dependencies": {
     "daisyui": "^2.33.0",
@@ -15,6 +18,7 @@
     "react-router-dom": "^6.4.2"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.5.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.7",
