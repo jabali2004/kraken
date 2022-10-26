@@ -1,6 +1,7 @@
 import { Logger, LogLevel, RequestMethod } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { PrismaService } from './services/prisma/prisma.service';
 
@@ -26,6 +27,8 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
+
+  app.use(helmet());
 
   await app.listen(process.env.PORT || 3000);
 
