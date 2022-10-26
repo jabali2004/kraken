@@ -1,0 +1,24 @@
+{
+  "folders": [
+    {
+      "path": "./",
+      "name": "kraken"
+    },
+    {
+      "path": "./backend",
+      "name": "backend"
+    },
+    {
+      "path": "./frontend",
+      "name": "frontend"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "backend": true,
+      "frontend": true,
+      "node_modules/": true,
+      "packages/": true
+    }
+  }
+}
