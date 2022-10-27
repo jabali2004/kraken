@@ -34,10 +34,10 @@ model Application {
 model Dependency {
   id String @id @default(uuid())
 
-  dependency   Application @relation(name: "dependents", fields: [dependencyId], references: [id])
+  dependency   Application @relation(name: "dependents", fields: [dependencyId], references: [id], onDelete: Cascade)
   dependencyId String
 
-  application   Application @relation(name: "dependencies", fields: [applicationId], references: [id])
+  application   Application @relation(name: "dependencies", fields: [applicationId], references: [id], onDelete: Cascade)
   applicationId String
 }
 
@@ -47,7 +47,7 @@ model Metadata {
   name  String
   value String?
 
-  application   Application @relation(name: "metadata", fields: [applicationId], references: [id])
+  application   Application @relation(name: "metadata", fields: [applicationId], references: [id], onDelete: Cascade)
   applicationId String
 
   createdAt DateTime?

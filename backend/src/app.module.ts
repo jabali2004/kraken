@@ -24,7 +24,7 @@ import { DependencyModule } from './dependency/dependency.module';
     TerminusModule,
     ThrottlerModule.forRoot({
       ttl: 10,
-      limit: 25,
+      limit: 60,
     }),
     CacheModule.register<RedisClientOptions>({
       isGlobal: true,
