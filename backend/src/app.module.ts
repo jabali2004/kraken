@@ -9,20 +9,24 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { redisStore } from 'cache-manager-redis-store';
 import { ConfigModule } from '@nestjs/config';
+import { RedisClientOptions } from 'redis';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+      cache: true,
+    }),
     TerminusModule,
     ThrottlerModule.forRoot({
       ttl: 10,
       limit: 25,
     }),
-    CacheModule.register({
+    CacheModule.register<RedisClientOptions>({
       isGlobal: true,
       store: redisStore as unknown as CacheStore,
-      host: process.env.REDIS_HOST || 'localhost',
-      port: process.env.REDIS_PORT || 6379,
+      url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
     }),
   ],
   controllers: [AppController, HealthController],
