@@ -23,8 +23,9 @@ model Application {
 
   name String @unique
 
-  metadata  Metadata[]
-  dependsOn Dependency[]
+  metadata   Metadata[]   @relation(name: "metadata")
+  dependsOn  Dependency[] @relation(name: "dependencies")
+  dependents Dependency[] @relation(name: "dependents")
 
   createdAt DateTime?
   updatedAt DateTime?
@@ -33,7 +34,10 @@ model Application {
 model Dependency {
   id String @id @default(uuid())
 
-  application   Application @relation(fields: [applicationId], references: [id])
+  dependency   Application @relation(name: "dependents", fields: [dependencyId], references: [id])
+  dependencyId String
+
+  application   Application @relation(name: "dependencies", fields: [applicationId], references: [id])
   applicationId String
 }
 
@@ -43,7 +47,7 @@ model Metadata {
   name  String
   value String?
 
-  application   Application @relation(fields: [applicationId], references: [id])
+  application   Application @relation(name: "metadata", fields: [applicationId], references: [id])
   applicationId String
 
   createdAt DateTime?
