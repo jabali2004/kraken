@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsNotEmpty,
-  IsObject,
   IsOptional,
   IsString,
+  ValidateNested,
 } from 'class-validator';
+import { KeyValuePair } from '../../types/key-value-pair';
 
 export class CreateApplicationDTO {
   @ApiProperty()
@@ -16,12 +18,18 @@ export class CreateApplicationDTO {
   @ApiProperty()
   @IsOptional()
   @IsArray()
+  @Type(() => String)
   dependsOn: string[];
 
-  @ApiProperty()
+  @ApiProperty({
+    isArray: true,
+    type: KeyValuePair,
+  })
   @IsOptional()
-  @IsObject()
-  metadata: { [key: string]: string };
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => KeyValuePair)
+  metadata: KeyValuePair[];
 
   constructor(partial: Partial<CreateApplicationDTO>) {
     Object.assign(this, partial);

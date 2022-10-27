@@ -1,6 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Application } from '@prisma/client';
+import { Application, Dependency, Metadata } from '@prisma/client';
 import { PrismaService } from '../services/prisma/prisma.service';
 import { FindAllQueryParams } from '../types/find-all-query-params';
 import { CreateApplicationDTO } from './dto/create-application.dto';
@@ -15,11 +15,47 @@ export class ApplicationsService {
     newApplication: CreateApplicationDTO,
   ): Promise<Application> {
     try {
+      const dependencies = await this.prisma.application.findMany({
+        select: { id: true },
+        where: {
+          name: {
+            in: newApplication.dependsOn,
+          },
+        },
+      });
+
       return await this.prisma.application.create({
         data: {
           ...newApplication,
           createdAt: new Date(),
           updatedAt: new Date(),
+          metadata: {
+            createMany: {
+              data: newApplication.metadata
+                ? newApplication.metadata.map((x) => {
+                    return {
+                      name: x.key,
+                      value: x.value,
+                      createdAt: new Date(),
+                      updatedAt: new Date(),
+                    };
+                  })
+                : undefined,
+              skipDuplicates: true,
+            },
+          },
+          dependsOn: {
+            createMany: {
+              data: dependencies
+                ? dependencies.map((x) => {
+                    return {
+                      dependencyId: x.id,
+                    };
+                  })
+                : undefined,
+              skipDuplicates: true,
+            },
+          },
         },
       });
     } catch (error) {
