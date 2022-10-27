@@ -29,7 +29,12 @@ export class ApplicationsService {
 
   public async findAll(): Promise<Application[]> {
     try {
-      return await this.prisma.application.findMany();
+      return await this.prisma.application.findMany({
+        include: {
+          metadata: true,
+          dependsOn: true,
+        },
+      });
     } catch (error) {
       throw new HttpException('Forbidden', 403);
     }
@@ -40,6 +45,10 @@ export class ApplicationsService {
       return await this.prisma.application.findUniqueOrThrow({
         where: {
           id,
+        },
+        include: {
+          metadata: true,
+          dependsOn: true,
         },
       });
     } catch (error) {

@@ -11,6 +11,8 @@ import { redisStore } from 'cache-manager-redis-store';
 import { ConfigModule } from '@nestjs/config';
 import { RedisClientOptions } from 'redis';
 import { ApplicationsModule } from './applications/applications.module';
+import { MetadataModule } from './metadata/metadata.module';
+import { DependencyModule } from './dependency/dependency.module';
 
 @Module({
   imports: [
@@ -26,10 +28,13 @@ import { ApplicationsModule } from './applications/applications.module';
     }),
     CacheModule.register<RedisClientOptions>({
       isGlobal: true,
+      ttl: 10,
       store: redisStore as unknown as CacheStore,
       url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
     }),
     ApplicationsModule,
+    MetadataModule,
+    DependencyModule,
   ],
   controllers: [AppController, HealthController],
   providers: [

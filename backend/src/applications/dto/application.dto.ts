@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Application } from '@prisma/client';
+import { DependencyDTO } from '../../dependency/dto/dependency.dto';
+import { MetadataDTO } from '../../metadata/dto/metadata.dto';
 
 export class ApplicationDTO {
   @ApiProperty()
@@ -7,6 +9,12 @@ export class ApplicationDTO {
 
   @ApiProperty()
   name: string;
+
+  @ApiProperty()
+  metadata: MetadataDTO[];
+
+  @ApiProperty()
+  dependsOn: DependencyDTO[];
 
   @ApiProperty()
   createdAt: Date | null;

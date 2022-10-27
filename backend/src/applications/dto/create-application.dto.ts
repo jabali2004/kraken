@@ -13,15 +13,15 @@ export class CreateApplicationDTO {
   @IsString()
   name: string;
 
-  // @ApiProperty()
-  // @IsOptional()
-  // @IsArray()
-  // dependsOn: string[];
+  @ApiProperty()
+  @IsOptional()
+  @IsArray()
+  dependsOn: string[];
 
-  // @ApiProperty()
-  // @IsOptional()
-  // @IsObject()
-  // metadata: { [key: string]: string };
+  @ApiProperty()
+  @IsOptional()
+  @IsObject()
+  metadata: { [key: string]: string };
 
   constructor(partial: Partial<CreateApplicationDTO>) {
     Object.assign(this, partial);
