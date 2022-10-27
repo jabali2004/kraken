@@ -10,7 +10,7 @@ services:
       - LOGGER=log
       - BACKEND_URL=http://localhost:3000
       - FRONTEND_URL=http://localhost:8080
-      - DATABASE_URL=postgresql://postgres:password@db:5432/postgres?schema=public
+      - DATABASE_URL=postgresql://postgres:password@db:5432/postgres?schema=public&connect_timeout=300
       - REDIS_PORT=6379
       - REDIS_HOST=redis
     depends_on:
@@ -26,7 +26,6 @@ services:
   db:
     image: postgres:14-alpine
     container_name: kraken-db
-    restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
