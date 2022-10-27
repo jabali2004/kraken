@@ -1,4 +1,9 @@
-import { Logger, LogLevel, RequestMethod } from '@nestjs/common';
+import {
+  Logger,
+  LogLevel,
+  RequestMethod,
+  ValidationPipe,
+} from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
@@ -15,6 +20,15 @@ async function bootstrap() {
   app.setGlobalPrefix('api', {
     exclude: [{ path: 'health', method: RequestMethod.GET }],
   });
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      enableDebugMessages: true,
+      always: true,
+    }),
+  );
 
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);

@@ -10,6 +10,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { redisStore } from 'cache-manager-redis-store';
 import { ConfigModule } from '@nestjs/config';
 import { RedisClientOptions } from 'redis';
+import { ApplicationsModule } from './applications/applications.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { RedisClientOptions } from 'redis';
       store: redisStore as unknown as CacheStore,
       url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
     }),
+    ApplicationsModule,
   ],
   controllers: [AppController, HealthController],
   providers: [
