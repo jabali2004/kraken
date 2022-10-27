@@ -8,10 +8,18 @@ import {
   Delete,
   ClassSerializerInterceptor,
   UseInterceptors,
+  Query,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Application } from '@prisma/client';
 import { classToPlain, instanceToPlain, plainToClass } from 'class-transformer';
+import { FindAllQueryParams } from '../types/find-all-query-params';
 import { ApplicationsService } from './applications.service';
 import { ApplicationDTO } from './dto/application.dto';
 import { CreateApplicationDTO } from './dto/create-application.dto';
@@ -38,8 +46,10 @@ export class ApplicationsController {
   @ApiOkResponse({ type: ApplicationDTO, isArray: true })
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  public async findAll(): Promise<Application[]> {
-    const applications = await this.applicationsService.findAll();
+  public async findAll(
+    @Query() query?: FindAllQueryParams,
+  ): Promise<Application[]> {
+    const applications = await this.applicationsService.findAll(query);
     return applications.map((x) => new ApplicationDTO(x));
   }
 
