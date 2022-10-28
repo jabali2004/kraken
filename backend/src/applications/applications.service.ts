@@ -1,6 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Application, Dependency, Metadata } from '@prisma/client';
+import { Application } from '@prisma/client';
 import { PrismaService } from '../services/prisma/prisma.service';
 import { FindAllQueryParams } from '../types/find-all-query-params';
 import { CreateApplicationDTO } from './dto/create-application.dto';
@@ -69,7 +69,11 @@ export class ApplicationsService {
       return await this.prisma.application.findMany({
         include: {
           metadata: true,
-          dependsOn: true,
+          dependsOn: {
+            include: {
+              application: true,
+            },
+          },
         },
         orderBy: { updatedAt: 'desc' },
         take: query?.limit ? parseInt(query.limit, 10) : undefined,
@@ -101,10 +105,57 @@ export class ApplicationsService {
     updatedApplication: UpdateApplicationDTO,
   ): Promise<Application> {
     try {
-      return await this.prisma.application.update({
-        where: { id },
-        data: { ...updatedApplication, updatedAt: new Date() },
+      const dependencies = await this.prisma.application.findMany({
+        select: { id: true },
+        where: {
+          name: {
+            in: updatedApplication?.dependsOn || undefined,
+          },
+        },
       });
+
+      const application = await this.prisma.application.update({
+        where: { id },
+        data: {
+          name: updatedApplication.name,
+          updatedAt: new Date(),
+          metadata: {
+            deleteMany: {
+              applicationId: id,
+            },
+            createMany: {
+              data: updatedApplication.metadata
+                ? updatedApplication.metadata.map((x) => {
+                    return {
+                      name: x.key,
+                      value: x.value,
+                      createdAt: new Date(),
+                      updatedAt: new Date(),
+                    };
+                  })
+                : undefined,
+              skipDuplicates: true,
+            },
+          },
+          dependsOn: {
+            deleteMany: {
+              applicationId: id,
+            },
+            createMany: {
+              data: dependencies
+                ? dependencies.map((x) => {
+                    return {
+                      dependencyId: x.id,
+                    };
+                  })
+                : undefined,
+              skipDuplicates: true,
+            },
+          },
+        },
+      });
+
+      return application;
     } catch (error) {
       throw new HttpException('Forbidden', 403);
       // TODO: Add error handling for name already exists

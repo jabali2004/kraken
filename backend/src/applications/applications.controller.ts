@@ -23,6 +23,7 @@ import { FindAllQueryParams } from '../types/find-all-query-params';
 import { ApplicationsService } from './applications.service';
 import { ApplicationDTO } from './dto/application.dto';
 import { CreateApplicationDTO } from './dto/create-application.dto';
+import { MinimalApplicationDTO } from './dto/minimal-application.dto';
 import { UpdateApplicationDTO } from './dto/update-application.dto';
 
 @ApiTags('applications')
@@ -43,14 +44,17 @@ export class ApplicationsController {
     return new ApplicationDTO(application);
   }
 
-  @ApiOkResponse({ type: ApplicationDTO, isArray: true })
+  @ApiOkResponse({ type: MinimalApplicationDTO, isArray: true })
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   public async findAll(
     @Query() query?: FindAllQueryParams,
   ): Promise<Application[]> {
     const applications = await this.applicationsService.findAll(query);
-    return applications.map((x) => new ApplicationDTO(x));
+
+    return applications.map(
+      (x) => new MinimalApplicationDTO(new ApplicationDTO(x)),
+    );
   }
 
   @ApiOkResponse({ type: ApplicationDTO })

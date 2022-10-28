@@ -6,7 +6,7 @@ type Props = {};
 export default function Header({}: Props) {
   return (
     <div className="navbar container mx-auto p-4 rounded-lg bg-primary">
-      <div className="navbar-start">
+      {/* <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <svg
@@ -31,11 +31,11 @@ export default function Header({}: Props) {
             </li>
           </ul>
         </div>
-      </div>
-      <div className="navbar-center">
+      </div> */}
+      <div className="navbar-start">
         <a className="btn btn-ghost normal-case text-xl">MetaMorph</a>
       </div>
-      <div className="navbar-end">
+      {/* <div className="navbar-end">
         <button className="btn btn-ghost btn-circle">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ export default function Header({}: Props) {
             />
           </svg>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -10,10 +10,10 @@ export class ApplicationDTO {
   @ApiProperty()
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({ isArray: true, type: MetadataDTO })
   metadata: MetadataDTO[];
 
-  @ApiProperty()
+  @ApiProperty({ isArray: true, type: DependencyDTO })
   dependsOn: DependencyDTO[];
 
   @ApiProperty()
