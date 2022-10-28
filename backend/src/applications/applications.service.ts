@@ -71,7 +71,7 @@ export class ApplicationsService {
           metadata: true,
           dependsOn: true,
         },
-        orderBy: { createdAt: 'asc' },
+        orderBy: { updatedAt: 'desc' },
         take: query?.limit ? parseInt(query.limit, 10) : undefined,
         skip: query?.skip ? parseInt(query.skip, 10) : undefined,
       });

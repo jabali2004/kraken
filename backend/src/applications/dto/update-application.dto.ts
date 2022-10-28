@@ -1,9 +1,13 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateApplicationDTO } from './create-application.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdateApplicationDTO extends PartialType(CreateApplicationDTO) {
+export class UpdateApplicationDTO {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
   constructor(partial: Partial<UpdateApplicationDTO>) {
-    super();
     Object.assign(this, partial);
   }
 }
