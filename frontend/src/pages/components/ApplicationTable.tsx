@@ -25,6 +25,7 @@ export default function ApplicationTable({ applications, onLoadMore, onEmpty }: 
 
   function handleDelete(row: MinimalApplicationDTO) {
     setRows((rows) => rows.filter((x) => x.id !== row.id));
+    onEmpty();
   }
 
   return (

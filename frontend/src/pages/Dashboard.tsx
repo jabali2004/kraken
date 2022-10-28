@@ -56,7 +56,13 @@ export default function Dashboard({}: Props) {
         onLoadMore={loadMore}
       />
 
-      <NewApplicationDialog onClose={reset} state={createMode} />
+      <NewApplicationDialog
+        onClose={() => {
+          setCreateMode(false);
+          reset();
+        }}
+        state={createMode}
+      />
     </div>
   );
 }
