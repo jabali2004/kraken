@@ -72,6 +72,7 @@ export class ApplicationsService {
           dependsOn: {
             include: {
               application: true,
+              dependency: true,
             },
           },
         },

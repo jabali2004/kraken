@@ -32,8 +32,8 @@ export class MinimalApplicationDTO {
 
     if (data.dependsOn) {
       this.dependsOn = data.dependsOn.map((x) => {
-        if (x['application']['name']) {
-          return x['application']['name'];
+        if (x['dependency']['name']) {
+          return x['dependency']['name'];
         }
       });
     }
