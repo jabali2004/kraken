@@ -28,6 +28,26 @@ export default function ApplicationRow({ application, onDelete, onReset }: Props
     <tr key={application.id}>
       <th>{application.id}</th>
       <td>{application.name}</td>
+      <td>
+        {application.dependsOn.map((x, i) => {
+          return (
+            <span
+              key={'dep-'.concat(x).concat('-').concat(i.toString())}
+              className="badge">
+              {x}
+            </span>
+          );
+        })}
+      </td>
+      <td>
+        {application.metadata.map((x, i) => {
+          return (
+            <span
+              key={'meta-'.concat(x.key).concat('-').concat(i.toString())}
+              className="badge">{`${x.key}:${x.value}`}</span>
+          );
+        })}
+      </td>
       <td>{new Date(application.createdAt).toLocaleString()}</td>
       <td>{new Date(application.updatedAt).toLocaleString()}</td>
       <td>

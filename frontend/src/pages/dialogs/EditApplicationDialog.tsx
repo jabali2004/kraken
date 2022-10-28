@@ -33,8 +33,6 @@ export default function EditApplicationDialog({ state, application, onClose }: P
 
   return (
     <Modal
-      disableEnforceFocus={true}
-      disablePortal={true}
       open={open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"

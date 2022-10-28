@@ -33,8 +33,10 @@ export default function ApplicationTable({ applications, onLoadMore, onEmpty }: 
       <table className="table w-full">
         <thead>
           <tr>
-            <th>#Id</th>
+            <th>Id</th>
             <th>Name</th>
+            <th>Depends On</th>
+            <th>Metadata</th>
             <th>Created At</th>
             <th>Updated At</th>
             <th>Actions</th>

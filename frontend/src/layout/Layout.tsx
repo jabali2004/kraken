@@ -12,7 +12,7 @@ export default function Layout({ children }: Props) {
       <header>
         <Header />
       </header>
-      <main className="flex-grow mx-auto px-6 py-6 md:px-0 container">{children}</main>
+      <main className="flex-grow mx-auto  mt-4 container">{children}</main>
       <footer>
         <Footer />
       </footer>

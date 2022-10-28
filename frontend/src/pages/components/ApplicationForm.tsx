@@ -33,7 +33,6 @@ export default function ApplicationForm({ application, onClose }: Props) {
   }, [application]);
 
   function save() {
-    console.log(application);
     if (application.id) {
       applicationApi
         .applicationsControllerUpdate(application.id, {
